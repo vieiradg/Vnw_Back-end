@@ -1,1 +1,1 @@
-web: gunicorn 'src.view.app:create_app()'
+web: gunicorn wsgi:app
