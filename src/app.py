@@ -1,9 +1,3 @@
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
-
 # RESPONSAVEL POR CRIAR A APLICAÇÃO 
 from flask import Flask
 from src.controller.colaborador_controller import bp_colaborador
