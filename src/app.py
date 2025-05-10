@@ -6,6 +6,7 @@ from config import Config
 from flask_cors import CORS
 from flasgger import Swagger
 
+
 swagger_config = {
     "headers": [],
     "specs": [
@@ -22,19 +23,15 @@ swagger_config = {
 }
 
 def create_app():
-    app = Flask(__name__)
-    
- 
-    CORS(app, resources={r"/*": {"origins": "*"}}) 
-    
-    app.config.from_object(Config)
-
-    db.init_app(app)
-
-    from src.controller.colaborador_controller import bp_colaborador
+    app = Flask(__name__) # <-- instancia do Flask
+    CORS(app, origins="*") # <---- A politica de CORS seja implementada em TODA A APLICAÇÃO 
     app.register_blueprint(bp_colaborador)
-
-    with app.app_context():
+    app.config.from_object(Config)
+    
+    db.init_app(app) # Inicia a conexão com o banco de dados
+    
+    Swagger(app, config=swagger_config)
+    
+    with app.app_context(): # Se as tabelas não existem, crie.
         db.create_all()
-
-    return app
+    return app  
