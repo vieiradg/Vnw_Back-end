@@ -25,7 +25,7 @@ def create_app():
     app.config.from_object(Config)
     
     # Configuração do CORS
-    CORS(app, resources={r"/*": {"origins": ["http://localhost:5000", "https://vnw-desafio-final-sispar.vercel.app"]}})
+    CORS(app, origins=["http://localhost:5000", "https://vnw-desafio-final-sispar.vercel.app"])
     
     # Registra o blueprint de colaboradores
     app.register_blueprint(bp_colaborador)
