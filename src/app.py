@@ -24,7 +24,7 @@ swagger_config = {
 
 def create_app():
     app = Flask(__name__) # <-- instancia do Flask
-    origins=["http://localhost:5000", "https://vnw-back-end.onrender.com"] # <---- A politica de CORS seja implementada em TODA A APLICAÇÃO 
+    origins=["http://localhost:5000", "https://vnw-desafio-final-sispar.vercel.app/"] # <---- A politica de CORS seja implementada em TODA A APLICAÇÃO 
     app.register_blueprint(bp_colaborador)
     app.config.from_object(Config)
     
