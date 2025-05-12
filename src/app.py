@@ -1,20 +1,18 @@
-# RESPONSAVEL POR CRIAR A APLICAÇÃO 
 from flask import Flask
 from src.controller.colaborador_controller import bp_colaborador
 from src.model import db
 from config import Config
-from flask_cors import CORS
+from flask_cors import CORS  # Importando CORS
 from flasgger import Swagger
-
 
 swagger_config = {
     "headers": [],
     "specs": [
         {
-            "endpoint": "apispec", # <-- Da um nome de referencia para a documentacao
-            "route": "/apispec.json/", # <- Rota do arquivo JSON para a construção da documentação
-            "rule_filter": lambda rule: True, # <-- Todas as rotas/endpoints serão documentados
-            "model_filter": lambda tag: True, # <-- Especificar quuais modelos da entidade serão documentados
+            "endpoint": "apispec", 
+            "route": "/apispec.json/", 
+            "rule_filter": lambda rule: True,
+            "model_filter": lambda tag: True, 
         }
     ],
     "static_url_path": "/flasgger_static",
@@ -23,15 +21,21 @@ swagger_config = {
 }
 
 def create_app():
-    app = Flask(__name__) # <-- instancia do Flask
-    origins=["http://localhost:5000", "https://vnw-desafio-final-sispar.vercel.app/"] # <---- A politica de CORS seja implementada em TODA A APLICAÇÃO 
-    app.register_blueprint(bp_colaborador)
+    app = Flask(__name__)  # Instancia o Flask
     app.config.from_object(Config)
     
-    db.init_app(app) # Inicia a conexão com o banco de dados
+    # Configuração do CORS
+    CORS(app, origins=["http://localhost:5000", "https://vnw-desafio-final-sispar.vercel.app/"], supports_credentials=True)
     
+    # Registra o blueprint de colaboradores
+    app.register_blueprint(bp_colaborador)
+    
+    db.init_app(app)  # Inicia a conexão com o banco de dados
+    
+    # Swagger
     Swagger(app, config=swagger_config)
     
-    with app.app_context(): # Se as tabelas não existem, crie.
+    with app.app_context():  # Se as tabelas não existem, cria-as
         db.create_all()
-    return app  
+
+    return app
