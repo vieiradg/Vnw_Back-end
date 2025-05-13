@@ -68,9 +68,10 @@ pip install -r requirements.txt
 ### 4. Configure o banco de dados
 
 Na pasta config: use:
-
+```
 SQLALCHEMY_DATABASE_URI = 'sqlite:///db.sqlite' => para rodar o projeto local
 SQLALCHEMY_DATABASE_URI = environ.get('URL_DATABASE_PROD') => para rodar o projeto com banco de dados do render
+```
 
 ### 5. Execute o projeto
 
