@@ -65,7 +65,7 @@ pip install -r requirements.txt
 
 ### 4. Configure o banco de dados
 
-Na pasta config: use,
+Na pasta config: use:
 
 SQLALCHEMY_DATABASE_URI = 'sqlite:///db.sqlite' => para rodar o projeto local
 SQLALCHEMY_DATABASE_URI = environ.get('URL_DATABASE_PROD') => para rodar o projeto com banco de dados do render
@@ -85,10 +85,12 @@ Realiza o login do colaborador.
 
 Exemplo de corpo:
 
+```
 {
   "email": "usuario@email.com",
   "senha": "123456"
 }
+```
 
 👤 Colaboradores
 GET - /colaborador/todos-colaboradores
@@ -97,8 +99,8 @@ Lista todos os colaboradores.
 POST - /colaborador/cadastrar
 Cadastra um novo colaborador.
 
-Exemplo de corpo:
-
+Exemplo:
+```
 {
   "nome": "Diego Vieira",
   "email": "diego@email.com",
@@ -106,6 +108,7 @@ Exemplo de corpo:
   "cargo": "Analista",
   "salario": 5000
 }
+```
 
 PUT - /colaborador/atualizar/<id_colaborador>
 Atualiza nome e cargo do colaborador com base no ID.
@@ -117,8 +120,8 @@ Retorna todos os reembolsos cadastrados.
 POST - /reembolso/solicitar
 Cria uma nova solicitação de reembolso.
 
-Exemplo de corpo:
-
+Exemplo:
+```
 {
   "colaborador": "Diego Vieira",
   "empresa": "OpenAI",
@@ -136,7 +139,7 @@ Exemplo de corpo:
   "despesa": 10.0,
   "id_colaborador": 1
 }
-
+```
 
 📚 Documentação da API (Swagger)
 Se estiver usando o Flasgger e configurou corretamente:
@@ -161,8 +164,7 @@ Banco externo (PostgreSQL do Render) para produção.
 Werkzeug (para hash de senha)
 
 
-👨‍💻 Autor
-Diego Vieira
+👨‍💻 Autor - Diego Vieira
 💼 Desenvolvedor Backend em formação
 📍 Rio de Janeiro, RJ
 
