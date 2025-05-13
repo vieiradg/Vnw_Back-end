@@ -22,6 +22,7 @@ def pegar_dados_todos_colaboradores():
     return jsonify(colaboradores), 200
 
 @bp_colaborador.route('/cadastrar', methods=['POST'])
+@swag_from ("../docs/colaboradores/cadastrar_colaborador.yml")
 def cadastrar_novo_colaborador(): 
     
     dados_requisicao = request.get_json() 
@@ -36,12 +37,13 @@ def cadastrar_novo_colaborador():
     
 #   INSERT INTO tb_colaborador (nome, email, senha, cargo, salario) VALUES (VALOR1,VALOR2,VALOR3,VALOR4,VALOR5)
     db.session.add(novo_colaborador)
-    db.session.commit() # Essa linha executa a query
+    db.session.commit() 
     
     return jsonify( {'mensagem': 'Dado cadastrado com sucesso'}), 201
 
 # Endereco/colaborador/atualizar/1
 @bp_colaborador.route('/atualizar/<int:id_colaborador>', methods=['PUT'])
+@swag_from("../docs/colaboradores/atualizar_colaborador.yml")
 def atualizar_dados_do_colaborador(id_colaborador):
     
     dados_requisicao = request.get_json()
@@ -60,6 +62,7 @@ def atualizar_dados_do_colaborador(id_colaborador):
 
 
 @bp_colaborador.route('/login', methods=['POST'])
+@swag_from("../docs/colaboradores/login.yml")
 def login():
     
     dados_requisicao = request.get_json()
@@ -73,7 +76,7 @@ def login():
     # SELECT * FROM [TABELA]
     colaborador = db.session.execute(
         db.select(Colaborador).where(Colaborador.email == email)
-    ).scalar() # -> A linha de informação OU None
+    ).scalar()
     
     if not colaborador:
         return jsonify({'mensagem': 'Usuario não encontrado'}), 404

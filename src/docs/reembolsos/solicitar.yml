@@ -1,0 +1,63 @@
+tags:
+  - Reembolso
+summary: Solicita um novo reembolso
+description: Envia os dados de um novo reembolso para armazenamento no banco de dados.
+
+parameters:
+  - in: body
+    name: corpo
+    required: true
+    schema:
+      type: object
+      properties:
+        colaborador:
+          type: string
+        empresa:
+          type: string
+        num_prestacao:
+          type: string
+        descricao:
+          type: string
+        tipo_reembolso:
+          type: string
+        centro_custo:
+          type: string
+        ordem_interna:
+          type: number
+        divisao:
+          type: number   
+        pep:
+          type: number 
+        moeda:
+          type: string
+        distancia_km:
+          type: number   
+        valor_km:
+          type: number   
+        valor_faturado:
+          type: number   
+        despesa:
+          type: number  
+        id_colaborador:
+          type: number  
+
+required:
+  - colaborador
+  - empresa
+  - num_prestacao
+  - descricao
+  - tipo_reembolso
+  - centro_custo
+  - moeda
+  - valor_faturado
+  - id_colaborador
+
+responses:
+  201:
+    description: Solicitação feita com sucesso 
+  400:
+    description: Erro na requisição
+  500:
+    description: Erro inesperado ao processar a requisição
+   
+

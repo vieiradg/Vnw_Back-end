@@ -5,6 +5,7 @@ from dotenv import load_dotenv # Carregamento das variáveis de ambiente nesse a
 load_dotenv()
 
 class Config():
-    SQLALCHEMY_DATABASE_URI = environ.get('URL_DATABASE_PROD') # Puxa a variável e utiliza para a conexão
-    SQLALCHEMY_TRACK_MODIFICATIONS=False # OTIMIZA as querys no banco de dados
+    #SQLALCHEMY_DATABASE_URI = 'sqlite:///db.sqlite' #roda local
+    SQLALCHEMY_DATABASE_URI = environ.get('URL_DATABASE_PROD') #roda online
+    SQLALCHEMY_TRACK_MODIFICATIONS=False 
     

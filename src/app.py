@@ -1,8 +1,9 @@
 from flask import Flask
 from src.controller.colaborador_controller import bp_colaborador
+from src.controller.reembolso_controller import bp_reembolso
 from src.model import db
 from config import Config
-from flask_cors import CORS  # Importando CORS
+from flask_cors import CORS 
 from flasgger import Swagger
 
 swagger_config = {
@@ -23,16 +24,16 @@ swagger_config = {
 def create_app():
     app = Flask(__name__)  # Instancia o Flask
     app.config.from_object(Config)
-    
+
     # Configuração do CORS
     CORS(app, origins=["http://localhost:5000", "https://vnw-desafio-final-sispar.vercel.app"])
     
     # Registra o blueprint de colaboradores
     app.register_blueprint(bp_colaborador)
-    
+    app.register_blueprint(bp_reembolso)
+
     db.init_app(app)  # Inicia a conexão com o banco de dados
     
-    # Swagger
     Swagger(app, config=swagger_config)
     
     with app.app_context():  # Se as tabelas não existem, cria-as
