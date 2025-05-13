@@ -6,6 +6,7 @@ Este é o backend da aplicação **Sispar**, desenvolvido com **Python + Flask**
 
 ## 📂 Estrutura do Projeto
 
+```
 .
 ├── .gitattributes
 ├── .gitignore
@@ -33,6 +34,7 @@ Este é o backend da aplicação **Sispar**, desenvolvido com **Python + Flask**
     └── tests/
         ├── __init__.py
         └── test_app.py
+```
 
 ---
 
