@@ -1,171 +1,123 @@
-# 💸 Sispar Backend
+# 💸 SISPAR Backend
 
-Este é o backend da aplicação **Sispar**, desenvolvido com **Python + Flask** e **SQLAlchemy**, que permite o gerenciamento de reembolsos de colaboradores em empresas.
+Sistema de gerenciamento de reembolsos desenvolvido com Python + Flask e SQLAlchemy.
 
----
 
 ## 📂 Estrutura do Projeto
-
 ```
-.
-├── .gitattributes
+sispar-backend/
 ├── .gitignore
-├── LICENSE
-├── README.md
 ├── config.py
-├── package-lock.json
-├── package.json
 ├── requirements.txt
 ├── run.py
-├── node_modules/
-│   └── .package-lock.json
 └── src/
-    ├── __init__.py
-    ├── app.py
-    ├── controller/
-    │   ├── colaborador_controller.py
-    │   └── reembolso_controller.py
-    ├── model/
-    │   ├── __init__.py
-    │   ├── colaborador_model.py
-    │   └── reembolso_model.py
-    ├── security/
-    │   └── security.py
-    └── tests/
-        ├── __init__.py
-        └── test_app.py
+├── app.py
+├── controller/
+│ ├── colaborador_controller.py
+│ └── reembolso_controller.py
+├── model/
+│ ├── colaborador_model.py
+│ └── reembolso_model.py
+├── security/
+│ └── security.py
+└── tests/
+└── test_app.py
 ```
 
----
 
-## 🚀 Como executar o projeto
+## 🚀 Como Executar
 
-### 1. Clone o repositório
-
-```bash
+1. Clone o repositório:
+```
 git clone https://github.com/vieiradg/Vnw_Back-end.git
 cd sispar-backend
 ```
 
-### 2. Crie e ative o ambiente virtual
-
-```bash
-No Windows:
+2. Configure o ambiente virtual:
+```
 python -m venv venv
-source venv/Scripts/activate
 
-No Linux/Mac:
-python3 -m venv venv
+# Windows:
+venv/Scripts/activate
+
+# Linux/Mac:
 source venv/bin/activate
+Instale as dependências:
 ```
 
-### 3. Instale as dependências
-
-```bash
+3. Instale as dependências
+```
 pip install -r requirements.txt
+Configure o banco em config.py:
 ```
 
-### 4. Configure o banco de dados
-
-Na pasta config: use:
+4. No arquivo config, verifique:
 ```
-SQLALCHEMY_DATABASE_URI = 'sqlite:///db.sqlite' => para rodar o projeto local
-SQLALCHEMY_DATABASE_URI = environ.get('URL_DATABASE_PROD') => para rodar o projeto com banco de dados do render
+SQLALCHEMY_DATABASE_URI = 'sqlite:///db.sqlite'  #roda o projeto local
+SQLALCHEMY_DATABASE_URI = environ.get('URL_DATABASE_PROD')  #roda o projeto online
 ```
 
-### 5. Execute o projeto
-
-```bash
+5. Execute:
+```
 python run.py
 ```
 
-
-📡 Principais Rotas
+📡 Endpoints Principais
 
 🔐 Autenticação
-POST - /colaborador/login
-Realiza o login do colaborador.
-
-Exemplo de corpo:
-
-```
+POST /colaborador/login
+Body:
 {
   "email": "usuario@email.com",
   "senha": "123456"
 }
-```
 
 👤 Colaboradores
-GET - /colaborador/todos-colaboradores
-Lista todos os colaboradores.
-
-POST - /colaborador/cadastrar
-Cadastra um novo colaborador.
-
-Exemplo:
-```
+GET /colaborador/todos-colaboradores
+PUT /colaborador/atualizar/<id_colaborador>
+POST /colaborador/cadastrar
+Body:
 {
-  "nome": "Diego Vieira",
-  "email": "diego@email.com",
-  "senha": "123456",
-  "cargo": "Analista",
+  "nome": "Novo Colaborador",
+  "email": "email@empresa.com",
+  "senha": "senha123",
+  "cargo": "Cargo",
   "salario": 5000
 }
-```
-
-PUT - /colaborador/atualizar/<id_colaborador>
-Atualiza nome e cargo do colaborador com base no ID.
 
 💵 Reembolsos
-GET - /reembolso/todos-reembolsos
-Retorna todos os reembolsos cadastrados.
-
-POST - /reembolso/solicitar
-Cria uma nova solicitação de reembolso.
-
-Exemplo:
-```
+GET /reembolso/todos-reembolsos
+GET /reembolso/<num_prestacao>
+POST /reembolso/solicitar
+Body:
 {
-  "colaborador": "Diego Vieira",
-  "empresa": "OpenAI",
-  "num_prestacao": "12345",
-  "descricao": "Viagem de trabalho",
+  "colaborador": "Nome",
+  "empresa": "Empresa",
+  "num_prestacao": 12345,
   "tipo_reembolso": "Transporte",
-  "centro_custo": "TI01",
-  "ordem_interna": "OI998",
-  "divisao": "TI",
-  "pep": "PEP002",
+  "centro_custo": "TI",
   "moeda": "BRL",
-  "distancia_km": 20,
-  "valor_km": 2.5,
-  "valor_faturado": 50.0,
-  "despesa": 10.0,
+  "valor_faturado": 150.50,
   "id_colaborador": 1
 }
-```
 
-📚 Documentação da API (Swagger)
-Se estiver usando o Flasgger e configurou corretamente:
 
-Acesse:
-```
-http://localhost:5000/apidocs
-```
-
+📚 Documentação
+Acesse a API Docs em:
+https://vnw-back-end.onrender.com/apidocs/#
 
 🛡️ Segurança
-O sistema utiliza hash de senha com bcrypt para garantir a segurança dos dados de login dos colaboradores.
+Hash de senhas com bcrypt
+Validação de dados em todas as rotas
+CORS configurado
 
-
-🛠 Tecnologias utilizadas
-Python 3.13
+🛠 Tecnologias
+Python 3.8+
 Flask
 SQLAlchemy
-Flasgger (Swagger UI)
-Banco local (SQLite apenas para testes).
-Banco externo (PostgreSQL do Render) para produção.
-Werkzeug (para hash de senha)
-
+SQLite (desenvolvimento)
+PostgreSQL (produção)
+Flasgger (documentação)
 
 👨‍💻 Autor - Diego Vieira
 💼 Desenvolvedor Backend em formação
