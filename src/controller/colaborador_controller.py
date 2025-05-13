@@ -22,7 +22,7 @@ def pegar_dados_todos_colaboradores():
     return jsonify(colaboradores), 200
 
 @bp_colaborador.route('/cadastrar', methods=['POST'])
-@swag_from ("../docs/colaborador/cadastrar_colaborador.yml")
+@swag_from ("../docs/colaboradores/cadastrar_colaborador.yml")
 def cadastrar_novo_colaborador(): 
     
     dados_requisicao = request.get_json() 
@@ -43,26 +43,35 @@ def cadastrar_novo_colaborador():
 
 # Endereco/colaborador/atualizar/1
 @bp_colaborador.route('/atualizar/<int:id_colaborador>', methods=['PUT'])
-@swag_from("../docs/colaborador/atualizar/id.yml")
+@swag_from("../docs/colaboradores/atualizar_colaborador.yml")
 def atualizar_dados_do_colaborador(id_colaborador):
-    
     dados_requisicao = request.get_json()
     
-    for colaborador in dados:
-        if colaborador['id'] == id_colaborador:
-            colaborador_encontrado = colaborador
-            break 
+    # Busca o colaborador no banco de dados
+    colaborador = db.session.execute(
+        db.select(Colaborador).where(Colaborador.id == id_colaborador)
+    ).scalar()
     
+    if not colaborador:
+        return jsonify({'mensagem': 'Colaborador não encontrado'}), 404
+    
+    # Atualiza os campos se eles estiverem na requisição
     if 'nome' in dados_requisicao:
-        colaborador_encontrado['nome'] = dados_requisicao['nome']
+        colaborador.nome = dados_requisicao['nome']
     if 'cargo' in dados_requisicao:
-        colaborador_encontrado['cargo'] = dados_requisicao['cargo']
-
-    return jsonify({'mensagem': 'Dados do colaborador atualizados com sucesso'}), 200
+        colaborador.cargo = dados_requisicao['cargo']
+    
+    # Confirma as alterações no banco de dados
+    try:
+        db.session.commit()
+        return jsonify({'mensagem': 'Dados do colaborador atualizados com sucesso'}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'mensagem': f'Erro ao atualizar colaborador: {str(e)}'}), 500
 
 
 @bp_colaborador.route('/login', methods=['POST'])
-@swag_from("../docs/colaborador/login.yml")
+@swag_from("../docs/colaboradores/login.yml")
 def login():
     
     dados_requisicao = request.get_json()

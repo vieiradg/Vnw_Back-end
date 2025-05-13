@@ -1,0 +1,12 @@
+tags:
+  - Reembolso
+summary: Busca reembolso por número de prestação
+description: Retorna um reembolso específico baseado no número único de prestação
+
+responses:
+  200:
+    description: Reembolso encontrado com sucesso
+  404:
+    description: Reembolso não encontrado
+  500:
+    description: Erro interno no servidor
