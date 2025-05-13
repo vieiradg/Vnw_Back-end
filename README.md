@@ -6,30 +6,31 @@ Este é o backend da aplicação **Sispar**, desenvolvido com **Python + Flask**
 
 ## 📂 Estrutura do Projeto
 
+.
 ├── .gitattributes
 ├── .gitignore
 ├── LICENSE
 ├── README.md
 ├── config.py
-├── node_modules
-    └── .package-lock.json
 ├── package-lock.json
 ├── package.json
 ├── requirements.txt
 ├── run.py
-└── src
+├── node_modules/
+│   └── .package-lock.json
+└── src/
     ├── __init__.py
     ├── app.py
-    ├── controller
-        ├── colaborador_controller.py
-        └── reembolso_controller.py
-    ├── model
-        ├── __init__.py
-        ├── colaborador_model.py
-        └── reembolso_model.py
-    ├── security
-        └── security.py
-    └── tests
+    ├── controller/
+    │   ├── colaborador_controller.py
+    │   └── reembolso_controller.py
+    ├── model/
+    │   ├── __init__.py
+    │   ├── colaborador_model.py
+    │   └── reembolso_model.py
+    ├── security/
+    │   └── security.py
+    └── tests/
         ├── __init__.py
         └── test_app.py
 
@@ -62,7 +63,14 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 4. Execute o projeto
+### 4. Configure o banco de dados
+
+Na pasta config: use,
+
+SQLALCHEMY_DATABASE_URI = 'sqlite:///db.sqlite' => para rodar o projeto local
+SQLALCHEMY_DATABASE_URI = environ.get('URL_DATABASE_PROD') => para rodar o projeto com banco de dados do render
+
+### 5. Execute o projeto
 
 ```bash
 python run.py
@@ -72,31 +80,25 @@ python run.py
 📡 Principais Rotas
 
 🔐 Autenticação
-POST /colaborador/login
+POST - /colaborador/login
 Realiza o login do colaborador.
 
 Exemplo de corpo:
 
-json
-Copiar
-Editar
 {
   "email": "usuario@email.com",
   "senha": "123456"
 }
 
 👤 Colaboradores
-GET /colaborador/todos-colaboradores
+GET - /colaborador/todos-colaboradores
 Lista todos os colaboradores.
 
-POST /colaborador/cadastrar
+POST - /colaborador/cadastrar
 Cadastra um novo colaborador.
 
 Exemplo de corpo:
 
-json
-Copiar
-Editar
 {
   "nome": "Diego Vieira",
   "email": "diego@email.com",
@@ -104,21 +106,19 @@ Editar
   "cargo": "Analista",
   "salario": 5000
 }
-PUT /colaborador/atualizar/<id_colaborador>
+
+PUT - /colaborador/atualizar/<id_colaborador>
 Atualiza nome e cargo do colaborador com base no ID.
 
 💵 Reembolsos
-GET /reembolso/todos-reembolsos
+GET - /reembolso/todos-reembolsos
 Retorna todos os reembolsos cadastrados.
 
-POST /reembolso/solicitar
+POST - /reembolso/solicitar
 Cria uma nova solicitação de reembolso.
 
 Exemplo de corpo:
 
-json
-Copiar
-Editar
 {
   "colaborador": "Diego Vieira",
   "empresa": "OpenAI",
@@ -136,6 +136,15 @@ Editar
   "despesa": 10.0,
   "id_colaborador": 1
 }
+
+
+📚 Documentação da API (Swagger)
+Se estiver usando o Flasgger e configurou corretamente:
+
+Acesse:
+```
+http://localhost:5000/apidocs
+```
 
 
 🛡️ Segurança
