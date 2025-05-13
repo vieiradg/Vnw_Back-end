@@ -66,17 +66,18 @@ python run.py
 
 🔐 Autenticação
 POST /colaborador/login
-Body:
+```
 {
   "email": "usuario@email.com",
   "senha": "123456"
 }
+```
 
 👤 Colaboradores
 GET /colaborador/todos-colaboradores
 PUT /colaborador/atualizar/<id_colaborador>
 POST /colaborador/cadastrar
-Body:
+```
 {
   "nome": "Novo Colaborador",
   "email": "email@empresa.com",
@@ -84,12 +85,13 @@ Body:
   "cargo": "Cargo",
   "salario": 5000
 }
+```
 
 💵 Reembolsos
 GET /reembolso/todos-reembolsos
 GET /reembolso/<num_prestacao>
 POST /reembolso/solicitar
-Body:
+```
 {
   "colaborador": "Nome",
   "empresa": "Empresa",
@@ -100,7 +102,7 @@ Body:
   "valor_faturado": 150.50,
   "id_colaborador": 1
 }
-
+```
 
 📚 Documentação
 Acesse a API Docs em:
