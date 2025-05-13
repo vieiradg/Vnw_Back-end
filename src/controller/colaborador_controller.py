@@ -22,7 +22,7 @@ def pegar_dados_todos_colaboradores():
     return jsonify(colaboradores), 200
 
 @bp_colaborador.route('/cadastrar', methods=['POST'])
-@swag_from ("../docs/colaboradores/cadastrar_colaborador.yml")
+@swag_from ("../docs/colaborador/cadastrar_colaborador.yml")
 def cadastrar_novo_colaborador(): 
     
     dados_requisicao = request.get_json() 
@@ -43,7 +43,7 @@ def cadastrar_novo_colaborador():
 
 # Endereco/colaborador/atualizar/1
 @bp_colaborador.route('/atualizar/<int:id_colaborador>', methods=['PUT'])
-@swag_from("../docs/colaboradores/atualizar_colaborador.yml")
+@swag_from("../docs/colaborador/atualizar/id.yml")
 def atualizar_dados_do_colaborador(id_colaborador):
     
     dados_requisicao = request.get_json()
@@ -62,7 +62,7 @@ def atualizar_dados_do_colaborador(id_colaborador):
 
 
 @bp_colaborador.route('/login', methods=['POST'])
-@swag_from("../docs/colaboradores/login.yml")
+@swag_from("../docs/colaborador/login.yml")
 def login():
     
     dados_requisicao = request.get_json()

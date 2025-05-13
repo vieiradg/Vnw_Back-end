@@ -8,7 +8,6 @@ from datetime import date
 bp_reembolso = Blueprint('reembolso', __name__, url_prefix='/reembolso')
 
 def reembolso_para_dict(reembolso):
-    """Converte TODOS os campos do Reembolso para dicionário"""
     return {
         'id': reembolso.id,
         'colaborador': reembolso.colaborador,
@@ -31,7 +30,7 @@ def reembolso_para_dict(reembolso):
     }
 
 @bp_reembolso.route('/todos-reembolsos', methods=['GET'])
-@swag_from("../docs/reembolsos/todos-reembolsos.yml")
+@swag_from("../docs/reembolso/todos-reembolsos.yml")
 def pegar_todos_reembolsos():
     try:
         reembolsos = Reembolso.query.all()
@@ -40,7 +39,7 @@ def pegar_todos_reembolsos():
         return jsonify({'erro': str(e)}), 500
 
 @bp_reembolso.route('/solicitar', methods=['POST'])
-@swag_from("../docs/reembolsos/solicitar.yml")
+@swag_from("../docs/reembolso/solicitar.yml")
 def solicitar_reembolso():
     try:
         dados = request.get_json()
