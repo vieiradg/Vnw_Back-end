@@ -53,7 +53,7 @@ Configure o banco em config.py:
 
 4. No arquivo config, verifique:
 ```
-SQLALCHEMY_DATABASE_URI = 'sqlite:///db.sqlite'  #roda o projeto local
+SQLALCHEMY_DATABASE_URI=environ.get('URL_DATABASE_DEV')  #roda o projeto local
 SQLALCHEMY_DATABASE_URI = environ.get('URL_DATABASE_PROD')  #roda o projeto online
 ```
 
@@ -120,6 +120,14 @@ SQLAlchemy
 SQLite (desenvolvimento)
 PostgreSQL (produção)
 Flasgger (documentação)
+
+FALTA IMPLEMENTAR 
+
+- SQLALCHEMY_DATABASE_URI=environ.get('URL_DATABASE_DEV') | só está rodando com o link do SQL direto no arquivo
+📌 Autorização com Tokens nas rotas
+📌 Utilizar bibliotecas para Validações
+📌 Relacionamentos no Banco de dados
+📌 Funções auxiliare
 
 👨‍💻 Autor - Diego Vieira
 💼 Desenvolvedor Backend em formação
