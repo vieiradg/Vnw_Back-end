@@ -1,7 +1,7 @@
 tags:
   - Colaborador
 description: Endpoint para atualizar os dados de um colaborador existente.
-
+summary: Atualiza dados de um colaborador existente
 parameters:
   - name: id_colaborador
     in: path

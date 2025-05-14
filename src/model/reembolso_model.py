@@ -2,6 +2,8 @@ from src.model import db
 from sqlalchemy.schema import Column, ForeignKey
 from sqlalchemy.types import Integer, String, DECIMAL, DATE
 from sqlalchemy import func
+from sqlalchemy import Date
+
 
 class Reembolso(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -9,7 +11,7 @@ class Reembolso(db.Model):
     empresa = Column(String(50), nullable=False)
     num_prestacao = Column(Integer, nullable=False)
     descricao = Column(String(255))
-    data = Column(DATE, server_default = func.current_date(), nullable=False)
+    data = Column(Date, nullable=False, server_default=func.current_date())
     tipo_reembolso = Column(String(35), nullable=False)
     centro_custo = Column(String(50), nullable=False)
     ordem_interna = Column(String(50))

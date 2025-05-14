@@ -5,7 +5,7 @@ from dotenv import load_dotenv # Carregamento das variáveis de ambiente nesse a
 load_dotenv()
 
 class Config():
-    #SQLALCHEMY_DATABASE_URI = 'sqlite:///db.sqlite' #roda local
+    #SQLALCHEMY_DATABASE_URI=environ.get('URL_DATABASE_DEV') #TA BUGADO, tem que pegar o link no .env e jogar aqui.
     SQLALCHEMY_DATABASE_URI = environ.get('URL_DATABASE_PROD') #roda online
     SQLALCHEMY_TRACK_MODIFICATIONS=False 
     

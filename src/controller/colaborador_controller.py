@@ -41,12 +41,43 @@ def cadastrar_novo_colaborador():
     
     return jsonify( {'mensagem': 'Dado cadastrado com sucesso'}), 201
 
-# Endereco/colaborador/atualizar/1
 @bp_colaborador.route('/atualizar/<int:id_colaborador>', methods=['PUT'])
 @swag_from("../docs/colaboradores/atualizar_colaborador.yml")
 def atualizar_dados_do_colaborador(id_colaborador):
     dados_requisicao = request.get_json()
     
+    colaborador = db.session.execute(
+        db.select(Colaborador).where(Colaborador.id == id_colaborador)
+    ).scalar()
+    
+    if not colaborador:
+        return jsonify({'mensagem': 'Colaborador não encontrado'}), 404
+    
+    if 'nome' in dados_requisicao:
+        colaborador.nome = dados_requisicao['nome']
+    if 'cargo' in dados_requisicao:
+        colaborador.cargo = dados_requisicao['cargo']
+    if 'email' in dados_requisicao:
+        colaborador.email = dados_requisicao['email']
+    
+    try:
+        db.session.commit()
+        return jsonify({
+            'mensagem': 'Dados do colaborador atualizados com sucesso',
+            'dados_atualizados': {
+                'nome': colaborador.nome,
+                'cargo': colaborador.cargo,
+                'email': colaborador.email
+            }
+        }), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'mensagem': f'Erro ao atualizar colaborador: {str(e)}'}), 500
+    
+
+@bp_colaborador.route('/deletar/<int:id_colaborador>', methods=['DELETE'])
+@swag_from("../docs/colaboradores/delete_colaborador.yml")
+def deletar_colaborador(id_colaborador):
     # Busca o colaborador no banco de dados
     colaborador = db.session.execute(
         db.select(Colaborador).where(Colaborador.id == id_colaborador)
@@ -55,19 +86,43 @@ def atualizar_dados_do_colaborador(id_colaborador):
     if not colaborador:
         return jsonify({'mensagem': 'Colaborador não encontrado'}), 404
     
-    # Atualiza os campos se eles estiverem na requisição
-    if 'nome' in dados_requisicao:
-        colaborador.nome = dados_requisicao['nome']
-    if 'cargo' in dados_requisicao:
-        colaborador.cargo = dados_requisicao['cargo']
-    
-    # Confirma as alterações no banco de dados
     try:
+        db.session.delete(colaborador)
         db.session.commit()
-        return jsonify({'mensagem': 'Dados do colaborador atualizados com sucesso'}), 200
+        return jsonify({'mensagem': 'Colaborador deletado com sucesso'}), 200
     except Exception as e:
         db.session.rollback()
-        return jsonify({'mensagem': f'Erro ao atualizar colaborador: {str(e)}'}), 500
+        return jsonify({'mensagem': f'Erro ao deletar colaborador: {str(e)}'}), 500
+    
+#softdelete poe o colaborador como inativo
+@bp_colaborador.route('/inativar/<int:id_colaborador>', methods=['DELETE'])
+@swag_from("../docs/colaboradores/inativar_colaborador.yml")
+def inativar_colaborador(id_colaborador):
+    colaborador = db.session.execute(
+        db.select(Colaborador).where(Colaborador.id == id_colaborador)
+    ).scalar()
+    
+    if not colaborador:
+        return jsonify({'mensagem': 'Colaborador não encontrado'}), 404
+    
+    try:
+        colaborador.ativo = False
+        db.session.commit()
+        return jsonify({'mensagem': 'Colaborador desativado com sucesso'}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'mensagem': f'Erro: {str(e)}'}), 500
+    
+
+@bp_colaborador.route('/reativar/<int:id_colaborador>', methods=['PATCH'])
+@swag_from("../docs/colaboradores/reativar_colaborador.yml")
+def reativar_colaborador(id_colaborador):
+    colaborador = db.session.get(Colaborador, id_colaborador)
+    if colaborador:
+        colaborador.ativo = True
+        db.session.commit()
+        return jsonify({'mensagem': 'Colaborador reativado!'}), 200
+    return jsonify({'mensagem': 'Colaborador não encontrado'}), 404
 
 
 @bp_colaborador.route('/login', methods=['POST'])

@@ -1,0 +1,27 @@
+
+tags:
+  - Colaborador
+summary: Desativa um colaborador (soft delete)
+description: Marca um colaborador como inativo no sistema sem removê-lo fisicamente do banco de dados
+parameters:
+  - name: id_colaborador
+    in: path
+    required: true
+    description: ID do colaborador a ser desativado
+    schema:
+      type: integer
+responses:
+  200:
+    description: Colaborador desativado com sucesso
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            mensagem:
+              type: string
+              example: "Colaborador desativado com sucesso"
+  404:
+    description: Colaborador não encontrado
+  500:
+    description: Erro interno do servidor

@@ -1,0 +1,26 @@
+tags:
+  - Colaborador
+summary: Reativa um colaborador
+description: Marca um colaborador previamente desativado como ativo novamente
+parameters:
+  - name: id_colaborador
+    in: path
+    required: true
+    description: ID do colaborador a ser reativado
+    schema:
+      type: integer
+responses:
+  200:
+    description: Colaborador reativado com sucesso
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            mensagem:
+              type: string
+              example: "Colaborador reativado!"
+  404:
+    description: Colaborador não encontrado
+  500:
+    description: Erro interno do servidor
