@@ -1,0 +1,23 @@
+tags:
+  - Colaborador
+description: Lista completa de colaboradores com informações básicas. Inclui status de ativo/inativo.
+summary: Retorna todos os colaboradores cadastrados
+responses:
+  200:
+    description: Lista de colaboradores retornada com sucesso
+    examples:
+      application/json:
+        - id: 1
+          nome: "João Silva"
+          email: "joao@empresa.com"
+          cargo: "Desenvolvedor"
+          ativo: true
+        - id: 2
+          nome: "Maria Souza"
+          email: "maria@empresa.com"
+          cargo: "Designer"
+          ativo: false
+  400:
+    description: Parâmetros inválidos
+  500:
+    description: Erro interno no servidor
